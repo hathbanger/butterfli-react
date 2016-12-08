@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import Login from './Login'
 import Logout from './Logout'
-import { loginUser, logoutUser } from '../actions'
+import { loginUser, logoutUser } from '../actions/loginAndAuthActions'
+import { Link } from 'react-router'
 
 export default class Navbar extends Component {
   
@@ -11,7 +12,7 @@ export default class Navbar extends Component {
     return (
       <nav className='navbar navbar-light bg-faded'>
         <div className='container-fluid'>
-          <a className="navbar-brand" href="#">JWT User Login</a>
+          <Link to="/" className="navbar-brand" >Butterfli</Link>
            <div className='navbar-form form-inline pull-xs-right'>
            {!isAuthenticated &&
              <Login

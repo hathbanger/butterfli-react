@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { signUp } from '../actions'
+import { signUp } from '../actions/loginAndAuthActions'
 import SignUp from '../components/SignUp'
 
 class SignUpContainer extends Component {

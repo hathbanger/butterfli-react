@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { loginUser, fetchPosts } from '../actions'
+import { fetchPosts } from '../actions/postActions'
+import { loginUser } from '../actions/loginAndAuthActions'
 import Login from '../components/Login'
-import Navbar from '../components/Navbar'
 import Home from '../components/Home'
+import Navbar from '../components/Navbar'
 
 class App extends Component {
   
   render() {
-    const { dispatch,  isAuthenticated, errorMessage, posts } = this.props
+    const { dispatch,  isAuthenticated, errorMessage, accounts, user, posts } = this.props
     
     return (
       <div>
@@ -17,11 +18,18 @@ class App extends Component {
           errorMessage={errorMessage}
           dispatch={dispatch}
         />
-        <Home
-          dispatch={dispatch}
-          isAuthenticated={isAuthenticated}
-          posts={this.props.posts}
-        />
+        <div className="container">
+          <div className="jumbotron">
+            {this.props.children && React.cloneElement(this.props.children, {
+              dispatch: this.props.dispatch, 
+              isAuthenticated: this.props.isAuthenticated, 
+              errorMessage: this.props.errorMessage, 
+              accounts: this.props.accounts,
+              user: this.props.user,
+              posts: this.props.posts
+            })}
+          </div>
+        </div>
       </div>
     )
   }
@@ -29,6 +37,7 @@ class App extends Component {
 
 App.propTypes = {
   posts: PropTypes.array,
+  accounts: PropTypes.array,
   dispatch: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string
@@ -36,12 +45,15 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   
-  const { auth, postFetch } = state
-  const { isAuthenticated, errorMessage } = auth
+  const { auth, accountFetch, postFetch } = state
+  const { isAuthenticated, user, errorMessage } = auth
+  const { accounts } = accountFetch
   const { posts } = postFetch
   
   return {
     isAuthenticated,
+    user,
+    accounts,
     posts,
     errorMessage
   }

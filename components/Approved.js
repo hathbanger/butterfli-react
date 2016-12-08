@@ -1,39 +1,44 @@
 import React, { Component, PropTypes } from 'react'
-import { fetchPosts } from '../actions'
-import Post from '../components/Post'
+import { fetchPosts } from '../actions/postActions'
+import Post from './Post'
+import SearchBar from './SearchBar'
 
-class PostsContainer extends Component {
+class ApprovedContainer extends Component {
   componentDidMount(){
     let dispatch = this.props.dispatch
-    dispatch(fetchPosts())
+    console.log("thesep[rops", this.props)
+    // dispatch(fetchPosts())
   }
   render() {
     const { dispatch,  isAuthenticated, errorMessage, posts } = this.props
 
     return (
       <div>
+        <div className="container">
+          <div className="jumbotron">
         <div className="card-group">
           {this.props.posts.map(function(post, index){
-              if (!post.approved && !post.rated ) return (
+              if ( post.approved && post.rated ) return (
                 <Post
                 key={ index }
                 post={post}
                 dispatch={dispatch} 
-                onSignupClick={ creds => dispatch(signUp(creds)) }
                 isAuthenticated={isAuthenticated}
                 />)        
             })}        
         </div>
       </div>
+      </div>
+      </div>
     )
   }
 }
 
-PostsContainer.propTypes = {
+ApprovedContainer.propTypes = {
   posts: PropTypes.array,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func
 }
 
 
-export default PostsContainer
+export default ApprovedContainer
 

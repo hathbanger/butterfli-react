@@ -2,7 +2,14 @@ import React from 'react'
 import { render } from 'react-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
+
+import { IndexRoute, Router, Route, Link, browserHistory } from 'react-router'
+
 import App from './containers/App'
+import Home from './components/Home'
+import Search from './components/Search'
+import Approved from './components/Approved'
+import AccountDashSettings from './components/AccountDashSettings'
 import userLogin from './reducers'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
@@ -19,8 +26,18 @@ let rootElement = document.getElementById('app')
 
 render(
   <Provider store={store}>
-    <App />
+	  <Router history={browserHistory}>
+	    <Route path="/" component={App}>
+		    <IndexRoute component={Home} />
+		    <Route path="/:userId/account/:account_id/search" component={Search} />
+		    <Route path="/:userId/account/:account_id/approved" component={Approved} />
+		    <Route path="/user/:userId/account/:account_id/settings" component={AccountDashSettings} />
+	    </Route>
+	  </Router>
   </Provider>,
   rootElement
 )
+
+
+	    	
 

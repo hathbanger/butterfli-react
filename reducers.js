@@ -1,13 +1,26 @@
 import { combineReducers } from 'redux'
 import { 
-  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, FETCH_SUCCESS
-} from './actions'
+  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, 
+} from './actions/loginAndAuthActions'
+
+import { 
+  FETCH_SUCCESS, 
+} from './actions/postActions'
+
+import { 
+  FETCH_ACCOUNTS_SUCCESS, 
+} from './actions/accountActions'
+
+import { 
+  GET_USER_SUCCESS, 
+} from './actions/userActions'
 
 // The auth reducer. The starting state sets authentication
 // based on a token being in local storage. In a real app,
 // we would also want a util to check if the token is expired.
 function auth(state = {
     isFetching: false,
+    user: {},
     isAuthenticated: localStorage.getItem('id_token') ? true : false
   }, action) {
   switch (action.type) {
@@ -16,7 +29,7 @@ function auth(state = {
       return Object.assign({}, state, {
         isFetching: true,
         isAuthenticated: false,
-        user: action.creds.username
+        user: action.creds
       })
     case LOGIN_SUCCESS:
     console.log('login success', action)
@@ -38,6 +51,12 @@ function auth(state = {
         isFetching: true,
         isAuthenticated: false
       })
+    case GET_USER_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: true,
+        user: action.user
+      })
     default:
       return state
     }
@@ -58,11 +77,27 @@ function postFetch(state = {
     }
 }
 
+function accountFetch(state = {
+  isFetching: false,
+  accounts: []
+}, action) {
+  switch (action.type) {
+    case  FETCH_ACCOUNTS_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        accounts: action.accounts
+      })
+    default:
+      return state
+    }
+}
+
 // We combine the reducers here so that they
 // can be left split apart above
 const userLogin = combineReducers({
   auth,
-  postFetch
+  postFetch,
+  accountFetch
 })
 
 export default userLogin
