@@ -28,26 +28,20 @@ function fetchPostsSuccess(posts){
 
 // // Uses the API middlware to get a quote
 export function fetchPosts(username, accountId) {
-  // let connection = new WebSocket('ws://localhost:1323/ws');
+  console.log('starting fetchPosts')
   
 return dispatch => {
-    console.log('fetching posts: username ->', username)
-    console.log('fetching posts: accountId ->', accountId)
     return fetch('http://localhost:1323/'+username+'/accounts/'+accountId+'/posts')
       .then(response =>
         response.json()
         .then(posts => ({ posts, response }))
       ).then(({ posts, response }) =>  {
         if (!response.ok) {
-          // If there was a problem, we want to
-          // dispatch the error condition
           // dispatch(loginError(posts.message))
           return Promise.reject(posts)
         }
         else {
-          console.log("posts: ", posts)
-          
-          // Dispatch the success action
+          console.log('success fetching: ', posts)
           dispatch(fetchPostsSuccess(posts))
         }
       }).catch(err => console.log("Error: ", err))
@@ -63,19 +57,18 @@ export function approvePost(creds) {
   }
   return dispatch => {
     dispatch(approveRequest(creds))
-    console.log('http://localhost:1323/post/approve/' + creds, config)
-    return fetch('http://localhost:1323/post/approve/' + creds, config)
+    return fetch('http://localhost:1323/post/approve/' + creds.id, config)
       .then(response =>
         response.json()
-        .then(user => ({user, response})))
-        .then(({user, response}) => {
+        .then(post => ({post, response})))
+        .then(({post, response}) => {
           if (!response.ok) {
             dispatch(approveFailure(response))
             return Promise.reject(response)
           }
           else {
-            dispatch(approveSuccess()) 
-            // dispatch(fetchPosts())
+            dispatch(approveSuccess())
+            dispatch(fetchPosts(creds.username, creds.account))
           }
         })
   }
@@ -114,8 +107,7 @@ export function disapprovePost(creds) {
   }
   return dispatch => {
     dispatch(disapproveRequest(creds))
-    console.log('http://localhost:1323/post/disapprove/' + creds, config)
-    return fetch('http://localhost:1323/post/disapprove/' + creds, config)
+    return fetch('http://localhost:1323/post/disapprove/' + creds.id, config)
       .then(response =>
         response.json()
         .then(user => ({user, response})))
@@ -126,7 +118,7 @@ export function disapprovePost(creds) {
           }
           else {
             dispatch(disapproveSuccess()) 
-            // dispatch(fetchPosts())
+            dispatch(fetchPosts(creds.username, creds.account))
           }
         })
   }
@@ -159,25 +151,24 @@ function disapproveFailure(creds) {
 
 
 // Uses the API middlware to get a quote
-export function deletePost(creds, posts) {
+export function deletePost(creds) {
   let config = {
     method: 'POST'
   }
   return dispatch => {
     dispatch(deleteRequest(creds))
-    console.log('http://localhost:1323/post/delete/' + creds, config)
-    return fetch('http://localhost:1323/'+creds.user+'/accounts/'+creds.account+'/post/delete/' + creds.post_id, config)
+    return fetch('http://localhost:1323/'+creds.user+'/accounts/'+creds.account+'/post/delete/' + creds.id, config)
       .then(response =>
         response.json()
-        .then(user => ({user, response})))
-        .then(({user, response}) => {
+        .then(post => ({post, response})))
+        .then(({post, response}) => {
           if (!response.ok) {
             dispatch(deleteFailure(response))
             return Promise.reject(response)
           }
           else {
-            dispatch(deleteSuccess(posts)) 
-            // dispatch(fetchPosts())
+            dispatch(deleteSuccess()) 
+            dispatch(fetchPosts(creds.username, creds.account))
           }
         })
   }

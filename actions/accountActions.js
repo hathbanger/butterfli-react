@@ -1,6 +1,8 @@
 
 export const FETCH_ACCOUNTS_SUCCESS = 'FETCH_ACCOUNTS_SUCCESS'
 
+export const FETCH_ACCOUNT_CREDS_SUCCESS = 'FETCH_ACCOUNT_CREDS_SUCCESS'
+
 
 function fetchAccountsSuccess(accounts){
   return {
@@ -32,6 +34,40 @@ return dispatch => {
           
           // Dispatch the success action
           dispatch(fetchAccountsSuccess(accounts))
+        }
+      }).catch(err => console.log("Error: ", err))
+  }
+  
+  
+}
+
+function fetchAccountCredsSuccess(accountCreds){
+  return {
+    type: FETCH_ACCOUNT_CREDS_SUCCESS,
+    accountCreds: accountCreds
+  }
+}
+
+// // Uses the API middlware to get a quote
+export function fetchCredsAccount(accountId) {
+    console.log('fetching accts..')
+return dispatch => {
+    return fetch('http://localhost:1323/hathbanger/accounts/' + accountId + '/account-creds')
+      .then(response =>
+        response.json()
+        .then(accountCreds => ({ accountCreds, response }))
+      ).then(({ accountCreds, response }) =>  {
+        if (!response.ok) {
+          // If there was a problem, we want to
+          // dispatch the error condition
+          // dispatch(loginError(accountCreds.message))
+          return Promise.reject(accountCreds)
+        }
+        else {
+          console.log("accountCreds: ", accountCreds)
+          
+          // Dispatch the success action
+          dispatch(fetchAccountCredsSuccess(accountCreds))
         }
       }).catch(err => console.log("Error: ", err))
   }

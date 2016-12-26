@@ -12,6 +12,10 @@ import {
 } from './actions/accountActions'
 
 import { 
+  FETCH_ACCOUNT_CREDS_SUCCESS, 
+} from './actions/accountActions'
+
+import { 
   GET_USER_SUCCESS, 
 } from './actions/userActions'
 
@@ -66,6 +70,7 @@ function postFetch(state = {
   isFetching: false,
   posts: []
 }, action) {
+  console.log('REDUCER TIME!', action)
   switch (action.type) {
     case  FETCH_SUCCESS:
       return Object.assign({}, state, {
@@ -92,12 +97,28 @@ function accountFetch(state = {
     }
 }
 
+function accountCredsFetch(state = {
+  isFetching: false,
+  accountCreds: []
+}, action) {
+  switch (action.type) {
+    case  FETCH_ACCOUNT_CREDS_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        accountCreds: action.accountCreds
+      })
+    default:
+      return state
+    }
+}
+
 // We combine the reducers here so that they
 // can be left split apart above
 const userLogin = combineReducers({
   auth,
   postFetch,
-  accountFetch
+  accountFetch,
+  accountCredsFetch
 })
 
 export default userLogin

@@ -29,9 +29,9 @@ render(
 	  <Router history={browserHistory}>
 	    <Route path="/" component={App}>
 		    <IndexRoute component={Home} />
-		    <Route path="/:userId/account/:account_id/search" component={Search} />
-		    <Route path="/:userId/account/:account_id/approved" component={Approved} />
-		    <Route path="/user/:userId/account/:account_id/settings" component={AccountDashSettings} />
+		    <Route path="/:userId/accounts/:account_id/search" component={Search} />
+		    <Route path="/:userId/accounts/:account_id/approved" component={Approved} />
+		    <Route path="/:userId/accounts/:account_id/settings" component={AccountDashSettings} />
 	    </Route>
 	  </Router>
   </Provider>,

@@ -14,8 +14,14 @@ export function tweetPost(creds) {
   }
   return dispatch => {
     dispatch(tweetRequest(creds))
-    console.log('http://localhost:1323/post/upload/twitter/' + creds.postId + '/' + creds.tweetText, config)
-    return fetch('http://localhost:1323/post/upload/twitter/' + creds.postId + '/' + creds.tweetText, config)
+    return fetch('http://localhost:1323/' 
+                    + creds.username 
+                    + '/accounts/' 
+                    + creds.accountId 
+                    + '/post/' 
+                    + creds.postId 
+                    + '/upload/twitter/' 
+                    + creds.tweetText, config)
       .then(response =>
         response.json()
         .then(user => ({user, response})))

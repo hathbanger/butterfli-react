@@ -25,6 +25,7 @@ class App extends Component {
               isAuthenticated: this.props.isAuthenticated, 
               errorMessage: this.props.errorMessage, 
               accounts: this.props.accounts,
+              accountCreds: this.props.accountCreds,
               user: this.props.user,
               posts: this.props.posts
             })}
@@ -45,15 +46,17 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   
-  const { auth, accountFetch, postFetch } = state
+  const { auth, accountFetch, accountCredsFetch, postFetch } = state
   const { isAuthenticated, user, errorMessage } = auth
-  const { accounts } = accountFetch
+  const { accounts, } = accountFetch
+  const { accountCreds } = accountCredsFetch
   const { posts } = postFetch
   
   return {
     isAuthenticated,
     user,
     accounts,
+    accountCreds,
     posts,
     errorMessage
   }
