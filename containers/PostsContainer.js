@@ -7,11 +7,12 @@ class PostsContainer extends Component {
 
   render() {
     const { dispatch,  isAuthenticated, errorMessage, account, user, posts } = this.props
+    console.log('account from PC', account)
     return (
       <div>
         <div className="card-group">
           {posts.map(function(post, index){
-              if (!post.approved && !post.rated ) return (
+              return (
                 <Post
                     key={ index }
                     post={ post }
@@ -19,9 +20,10 @@ class PostsContainer extends Component {
                     user={ user }
                     account={ account }
                     isAuthenticated={ isAuthenticated }
-                    approvePost={creds => dispatch(approvePost(creds))}
-                    disapprovePost={creds => dispatch(disapprovePost(creds))}
-                    deletePost={creds => dispatch(deletePost(creds))}
+                    approvePost={creds => dispatch(approvePost(posts, creds))}
+                    disapprovePost={creds => dispatch(disapprovePost(posts, creds))}
+                    deletePost={creds => dispatch(deletePost(posts, creds))}
+                    tweetPost={creds => dispatch(tweetPost(creds))}
                 />)        
             })}        
         </div>

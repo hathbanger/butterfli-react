@@ -4,7 +4,8 @@ import {
 } from './actions/loginAndAuthActions'
 
 import { 
-  FETCH_SUCCESS, 
+  FETCH_SUCCESS, APPROVE_REQUEST, APPROVE_SUCCESS, DISAPPROVE_REQUEST, DISAPPROVE_SUCCESS,
+  DELETE_REQUEST, DELETE_SUCCESS 
 } from './actions/postActions'
 
 import { 
@@ -70,13 +71,24 @@ function postFetch(state = {
   isFetching: false,
   posts: []
 }, action) {
-  console.log('REDUCER TIME!', action)
   switch (action.type) {
     case  FETCH_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
         posts: action.posts
       })
+    case APPROVE_REQUEST:
+      return { ...state, posts: action.posts }
+    case APPROVE_SUCCESS:
+      return { ...state, posts: action.posts }
+    case DISAPPROVE_REQUEST:
+      return { ...state, posts: action.posts }
+    case DISAPPROVE_SUCCESS:
+      return { ...state, posts: action.posts }
+    case DELETE_REQUEST:
+      return { ...state, posts: action.posts }
+    case DELETE_SUCCESS:
+      return { ...state, posts: action.posts }
     default:
       return state
     }
@@ -86,6 +98,7 @@ function accountFetch(state = {
   isFetching: false,
   accounts: []
 }, action) {
+  console.log('action.accounts', action.accounts)
   switch (action.type) {
     case  FETCH_ACCOUNTS_SUCCESS:
       return Object.assign({}, state, {
@@ -101,6 +114,7 @@ function accountCredsFetch(state = {
   isFetching: false,
   accountCreds: []
 }, action) {
+  console.log('accountCredsFetch.accounts', action)
   switch (action.type) {
     case  FETCH_ACCOUNT_CREDS_SUCCESS:
       return Object.assign({}, state, {

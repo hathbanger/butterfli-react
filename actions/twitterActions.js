@@ -12,14 +12,15 @@ export function tweetPost(creds) {
   let config = {
     method: 'POST'
   }
+  console.log('creeds', creds)
   return dispatch => {
     dispatch(tweetRequest(creds))
     return fetch('http://localhost:1323/' 
                     + creds.username 
                     + '/accounts/' 
-                    + creds.accountId 
+                    + creds.account 
                     + '/post/' 
-                    + creds.postId 
+                    + creds.id 
                     + '/upload/twitter/' 
                     + creds.tweetText, config)
       .then(response =>

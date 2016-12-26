@@ -1,4 +1,4 @@
-
+import update from 'immutability-helper';
 
 export const APPROVE_REQUEST = 'APPROVE_REQUEST'
 export const APPROVE_SUCCESS = 'APPROVE_SUCCESS'
@@ -51,12 +51,12 @@ return dispatch => {
 }
 
 // Uses the API middlware to get a quote
-export function approvePost(creds) {
+export function approvePost(posts, creds) {
   let config = {
     method: 'POST'
   }
   return dispatch => {
-    dispatch(approveRequest(creds))
+    dispatch(approveRequest(posts, creds))
     return fetch('http://localhost:1323/post/approve/' + creds.id, config)
       .then(response =>
         response.json()
@@ -67,27 +67,30 @@ export function approvePost(creds) {
             return Promise.reject(response)
           }
           else {
-            dispatch(approveSuccess())
-            dispatch(fetchPosts(creds.username, creds.account))
+            let index = posts.findIndex(x => x.id==creds.id)
+            const newPostsArray = update(posts, {[index]: {approved: {$set: true}}, rated: {$set: true}})    
+            dispatch(approveSuccess(newPostsArray, creds))
           }
         })
   }
 }
 
 
-function approveRequest() {
+function approveRequest(posts, post) {
   return {
     type: APPROVE_REQUEST,
     isFetching: true,
-    isAuthenticated: true
+    isAuthenticated: true,
+    posts: posts
   }
 }
 
-function approveSuccess(creds) {
+function approveSuccess(posts, post) {
   return {
     type: APPROVE_SUCCESS,
     isFetching: false,
-    isAuthenticated: true
+    isAuthenticated: true,
+    posts: posts
   }
 }
 
@@ -101,12 +104,13 @@ function approveFailure(creds) {
 
 
 // Uses the API middlware to get a quote
-export function disapprovePost(creds) {
+export function disapprovePost(posts, creds) {
   let config = {
     method: 'POST'
   }
   return dispatch => {
-    dispatch(disapproveRequest(creds))
+    dispatch(disapproveRequest(posts, creds))
+    console.log(creds)
     return fetch('http://localhost:1323/post/disapprove/' + creds.id, config)
       .then(response =>
         response.json()
@@ -117,77 +121,86 @@ export function disapprovePost(creds) {
             return Promise.reject(response)
           }
           else {
-            dispatch(disapproveSuccess()) 
-            dispatch(fetchPosts(creds.username, creds.account))
+            let index = posts.findIndex(x => x.id==creds.id)
+            console.log('HERES INDEX', index)
+            const newPostsArray = update(posts, {[index]: {approved: {$set: false}, rated: {$set: true}}})    
+            dispatch(disapproveSuccess(newPostsArray, creds)) 
+            // dispatch(fetchPosts(creds.username, creds.account))
           }
         })
   }
 }
 
 
-function disapproveRequest() {
+function disapproveRequest(posts, post) {
   return {
     type: DISAPPROVE_REQUEST,
     isFetching: true,
-    isAuthenticated: true
+    isAuthenticated: true,
+    posts: posts
   }
 }
 
-function disapproveSuccess(creds) {
+function disapproveSuccess(posts, post) {
   return {
     type: DISAPPROVE_SUCCESS,
     isFetching: false,
-    isAuthenticated: true
+    isAuthenticated: true,
+    posts: posts
   }
 }
 
-function disapproveFailure(creds) {
+function disapproveFailure(posts) {
   return {
     type: DISAPPROVE_FAILURE,
     isFetching: false,
-    isAuthenticated: true
+    isAuthenticated: true,
+    posts: posts
   }
 }
 
 
 // Uses the API middlware to get a quote
-export function deletePost(creds) {
+export function deletePost(posts, post) {
   let config = {
     method: 'POST'
   }
   return dispatch => {
-    dispatch(deleteRequest(creds))
-    return fetch('http://localhost:1323/'+creds.user+'/accounts/'+creds.account+'/post/delete/' + creds.id, config)
+    dispatch(deleteRequest(posts, post))
+    return fetch('http://localhost:1323/'+post.username+'/accounts/'+post.account+'/post/delete/' + post.id, config)
       .then(response =>
         response.json()
-        .then(post => ({post, response})))
-        .then(({post, response}) => {
+        .then(postRes => ({postRes, response})))
+        .then(({postRes, response}) => {
           if (!response.ok) {
             dispatch(deleteFailure(response))
             return Promise.reject(response)
           }
           else {
-            dispatch(deleteSuccess()) 
-            dispatch(fetchPosts(creds.username, creds.account))
+            let index = posts.findIndex(x => x.id==post.id)
+            const newPostsArray = update(posts, {$splice: [[index, 1]]})    
+            dispatch(deleteSuccess(newPostsArray, post)) 
           }
         })
   }
 }
 
 
-function deleteRequest() {
+function deleteRequest(posts, post) {
   return {
     type: DELETE_REQUEST,
     isFetching: true,
-    isAuthenticated: true
+    isAuthenticated: true,
+    posts: posts
   }
 }
 
-function deleteSuccess(creds) {
+function deleteSuccess(posts, post) {
   return {
     type: DELETE_SUCCESS,
     isFetching: false,
-    isAuthenticated: true
+    isAuthenticated: true,
+    posts: posts
   }
 }
 
@@ -195,7 +208,8 @@ function deleteFailure(creds) {
   return {
     type: DELETE_FAILURE,
     isFetching: false,
-    isAuthenticated: true
+    isAuthenticated: true,
+    posts: posts
   }
 }
 

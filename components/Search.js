@@ -19,16 +19,32 @@ class ApprovedContainer extends Component {
     const { dispatch,  isAuthenticated, errorMessage, user, accounts, posts } = this.props
     let username = this.props.params.userId
     let accountId = this.props.params.account_id
-    let filteredPosts = this.props.posts.filter(function(post){
+    console.log('this.props in search', this.props)
+    // const filteredAccount = this.props.accounts.filter(function(acct){
+    //   return acct.id == accountId
+    // })
+    // console.log('filteredAccount', filteredAccount)
+    // const filteredPosts = filteredAccount[0].posts.filter(function(post){
+    //   return !post.approved && !post.rated && post.account == accountId
+    // })
+    const filteredPosts = this.props.posts.filter(function(post){
       return !post.approved && !post.rated && post.account == accountId
     })
-    
+
+    console.log('this.props in search', this.props)
     return (
       <div>
         <div className="container">
           <div className="jumbotron">
-          <SearchBar dispatch={dispatch} user={this.props.params.userId} account={this.props.params.account_id} />
-          <PostsContainer dispatch={this.props.dispatch} posts={filteredPosts} user={username} account={accountId} />
+            <SearchBar 
+              dispatch={dispatch} 
+              user={this.props.params.userId} 
+              account={this.props.params.account_id} />
+            <PostsContainer 
+              dispatch={this.props.dispatch} 
+              posts={filteredPosts} 
+              user={username} 
+              account={accountId} />
           </div>
         </div>
       </div>

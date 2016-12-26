@@ -24,11 +24,12 @@ export default class Post extends Component {
   
 
   handleTweetClick(event) {
-    let text = "NYE"
+    let text = ""
     const creds = { username: this.props.post.username, 
                     accountId: this.props.post.account, 
                     postId: this.props.post.id, 
                     tweetText: text } 
+    this.props.tweetPost(this.props.post)
   }
 
   handleApproveClick(event) {
@@ -40,9 +41,6 @@ export default class Post extends Component {
   }
 
   handleDeleteClick(event) {
-    // console.log("delete click props: ",this.props)
-    // const creds = { user: this.props.user, account: this.props.account, post_id: this.props.post.id }
-    // this.props.dispatch(deletePost(creds))
     this.props.deletePost(this.props.post)
   }
 

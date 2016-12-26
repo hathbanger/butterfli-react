@@ -1,9 +1,14 @@
 import React, { Component, PropTypes } from 'react'
-import { tweetPost } from '../actions/twitterActions'
+import { fetchPosts } from '../actions/postActions'
+import { fetchCredsAccount } from '../actions/accountActions'
 import { Link } from 'react-router'
 
 export default class AccountCard extends Component {
-  
+  componentDidMount(){
+    console.log('this.props', this.props)
+    this.props.dispatch(fetchPosts(this.props.account.username, this.props.account.id))
+    this.props.dispatch(fetchCredsAccount(this.props.account.id))
+  }
   render() {
     const { errorMessage, dispatch, user, account } = this.props
     return (
@@ -15,6 +20,7 @@ export default class AccountCard extends Component {
                 <Link to={'/'+this.props.account.username+'/accounts/'+this.props.account.id + '/search' } className="btn btn-primary" >Search</Link>
                 <Link to={'/'+this.props.account.username+'/accounts/'+this.props.account.id + '/approved' } className="btn btn-primary" >Approved</Link>
                 <Link to={'/'+this.props.account.username+'/accounts/'+this.props.account.id + '/settings' } className="btn btn-primary" >Settings</Link>
+                
             </div>
           </div>      
         </div>

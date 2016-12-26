@@ -8,7 +8,7 @@ export default class AccountDashSettings extends Component {
     let dispatch = this.props.dispatch
     console.log("praaaps", this.props)
     console.log(this.props.params.account_id)
-    dispatch(fetchCredsAccount(this.props.account.id))
+    dispatch(fetchCredsAccount(this.props.params.account_id))
   }
 
   componentDidMount(){
@@ -27,16 +27,16 @@ export default class AccountDashSettings extends Component {
     const { dispatch, isAuthenticated, errorMessage, user, accounts, posts } = this.props
     let elementPos = this.props.accounts.map(function(x) {return x.id; }).indexOf(this.props.params.account_id);
   	let objectFound = this.props.accounts[elementPos];
-    console.log("this the usssser: ", this.props.user)
+    console.log("this the usssser: ", this.props)
 
     return (
       <div>
 			<h1>{objectFound.title}</h1>
 			<h2>Twitter Creds</h2>
-        <input type='text' ref='consumerKey' className="form-control" value={this.props.twitterCreds.consumerKey} style={{ marginRight: '5px' }} placeholder='consumer key'/>
-        <input type='text' ref='consumerSecret' className="form-control" value={this.props.twitterCreds.consumerSecret} style={{ marginRight: '5px' }} placeholder='consumer secret'/>
-        <input type='text' ref='accessToken' className="form-control" value={this.props.twitterCreds.accessToken} style={{ marginRight: '5px' }} placeholder='access token'/>
-        <input type='text' ref='accessTokenSecret' className="form-control" value={this.props.twitterCreds.accessTokenSecret} style={{ marginRight: '5px' }} placeholder='access token secret'/>
+        <input type='text' ref='consumerKey' className="form-control" value={this.props.accountCreds.consumerKey} style={{ marginRight: '5px' }} placeholder='consumer key'/>
+        <input type='text' ref='consumerSecret' className="form-control" value={this.props.accountCreds.consumerSecret} style={{ marginRight: '5px' }} placeholder='consumer secret'/>
+        <input type='text' ref='accessToken' className="form-control" value={this.props.accountCreds.accessToken} style={{ marginRight: '5px' }} placeholder='access token'/>
+        <input type='text' ref='accessTokenSecret' className="form-control" value={this.props.accountCreds.accessTokenSecret} style={{ marginRight: '5px' }} placeholder='access token secret'/>
         <button onClick={(event) => this.handleClick(event)} className="btn btn-primary" type="button">Save!</button>
       </div>
     )

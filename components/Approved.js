@@ -4,35 +4,27 @@ import Post from './Post'
 import PostsContainer from '../containers/PostsContainer'
 
 class ApprovedContainer extends Component {
-  componentDidMount(){
-    let dispatch = this.props.dispatch
-    // dispatch(fetchPosts())
+  componentWillMount(){
+    this.props.dispatch(fetchPosts(this.props.params.userId, this.props.params.account_id))    
   }
   render() {
     const { dispatch,  isAuthenticated, errorMessage, posts } = this.props
     let username = this.props.params.userId
     let accountId = this.props.params.account_id    
-    let filteredPosts = this.props.posts.filter(function(post){
-      return post.approved && post.rated && post.account == accountId
+    const filteredPosts = this.props.posts.filter(function(post){
+        return post.rated && post.approved && post.account == accountId
     })
     return (
       <div>
         <div className="container">
           <div className="jumbotron">
-          <PostsContainer dispatch={this.props.dispatch} posts={filteredPosts} user={username} account={accountId} />
-        <div className="card-group">
-          {this.props.posts.map(function(post, index){
-              if ( post.approved && post.rated ) return (
-                <Post
-                key={ index }
-                post={post}
-                dispatch={dispatch} 
-                isAuthenticated={isAuthenticated}
-                />)        
-            })}        
+            <PostsContainer 
+              dispatch={this.props.dispatch} 
+              posts={filteredPosts} 
+              user={username} 
+              account={accountId} />
+          </div>
         </div>
-      </div>
-      </div>
       </div>
     )
   }
