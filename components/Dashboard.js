@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { fetchAccounts } from '../actions/accountActions'
 import AccountCard from './AccountCard'
+import BotNetContainer from '../containers/BotNetContainer'
+
 
 export default class Dashboard extends Component {
   componentDidMount(){
@@ -11,6 +13,7 @@ export default class Dashboard extends Component {
     const { dispatch, isAuthenticated, user, errorMessage, posts } = this.props
     return (
       <div>
+        <BotNetContainer dispatch={dispatch} />
           {this.props.accounts.map(function(account, index){
               return (
                 <AccountCard
