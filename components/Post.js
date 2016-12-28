@@ -11,8 +11,12 @@ export default class Post extends Component {
           <div className="card">
             <img className="img-fluid card-img-top" src={this.props.post.imgurl} alt="Card image cap"/>
             <div className="card-block">
+            {this.props.template != "Search" &&
               <a onClick={(event) => this.handleTweetClick(event)} className="btn btn-primary btn-block">Tweet</a>
+            }
+            {this.props.template != "Approve" &&
               <a onClick={(event) => this.handleApproveClick(event)} className="btn btn-success btn-block">Approve</a>
+            }
               <a onClick={(event) => this.handleDisapproveClick(event)} className="btn btn-warning btn-block">Disapprove</a>
               <a onClick={(event) => this.handleDeleteClick(event)} className="btn btn-danger btn-block">Delete</a>
             </div>

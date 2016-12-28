@@ -20,13 +20,6 @@ class ApprovedContainer extends Component {
     let username = this.props.params.userId
     let accountId = this.props.params.account_id
     console.log('this.props in search', this.props)
-    // const filteredAccount = this.props.accounts.filter(function(acct){
-    //   return acct.id == accountId
-    // })
-    // console.log('filteredAccount', filteredAccount)
-    // const filteredPosts = filteredAccount[0].posts.filter(function(post){
-    //   return !post.approved && !post.rated && post.account == accountId
-    // })
     const filteredPosts = this.props.posts.filter(function(post){
       return !post.approved && !post.rated && post.account == accountId
     })
@@ -44,7 +37,9 @@ class ApprovedContainer extends Component {
               dispatch={this.props.dispatch} 
               posts={filteredPosts} 
               user={username} 
-              account={accountId} />
+              account={accountId} 
+              template={"Search"}
+              />
           </div>
         </div>
       </div>

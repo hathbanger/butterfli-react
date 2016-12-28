@@ -22,7 +22,8 @@ class ApprovedContainer extends Component {
               dispatch={this.props.dispatch} 
               posts={filteredPosts} 
               user={username} 
-              account={accountId} />
+              account={accountId}
+              template={"Approve"} />
           </div>
         </div>
       </div>

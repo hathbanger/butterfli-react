@@ -6,7 +6,6 @@ export default class Dashboard extends Component {
   componentDidMount(){
     let dispatch = this.props.dispatch
     dispatch(fetchAccounts(this.props.user))
-    console.log('this.props:::', this.props)
   }
   render() {
     const { dispatch, isAuthenticated, user, errorMessage, posts } = this.props
@@ -21,8 +20,16 @@ export default class Dashboard extends Component {
                 isAuthenticated={isAuthenticated}
                 />)        
             })} 
+            <button 
+              className="btn btn-lg btn-block" 
+              onClick={event => this.handleClick(event)}>Add Account</button>
       </div>
     )
+  }
+
+  handleClick(event){
+    let dispatch = this.props.dispatch
+    dispatch(addAccount(event))
   }
 
 }

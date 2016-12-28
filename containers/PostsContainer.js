@@ -7,9 +7,11 @@ class PostsContainer extends Component {
 
   render() {
     const { dispatch,  isAuthenticated, errorMessage, account, user, posts } = this.props
-    console.log('account from PC', account)
+    console.log('account from PC', this.props)
+    let template = this.props.template
     return (
       <div>
+      
         <div className="card-group">
           {posts.map(function(post, index){
               return (
@@ -24,6 +26,7 @@ class PostsContainer extends Component {
                     disapprovePost={creds => dispatch(disapprovePost(posts, creds))}
                     deletePost={creds => dispatch(deletePost(posts, creds))}
                     tweetPost={creds => dispatch(tweetPost(creds))}
+                    template={template}
                 />)        
             })}        
         </div>

@@ -13,8 +13,6 @@ function fetchAccountsSuccess(accounts){
 
 // // Uses the API middlware to get a quote
 export function fetchAccounts() {
-  // let connection = new WebSocket('ws://localhost:1323/ws');
-    console.log('fetching accts..')
 return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     // dispatch(requestLogin(creds))
@@ -37,8 +35,6 @@ return dispatch => {
         }
       }).catch(err => console.log("Error: ", err))
   }
-  
-  
 }
 
 function fetchAccountCredsSuccess(accountCreds){
@@ -47,10 +43,15 @@ function fetchAccountCredsSuccess(accountCreds){
     accountCreds: accountCreds
   }
 }
+function fetchAccountCredsFailure(accountCreds){
+  return {
+    type: FETCH_ACCOUNT_CREDS_SUCCESS,
+    accountCreds: accountCreds
+  }
+}
 
 // // Uses the API middlware to get a quote
 export function fetchCredsAccount(accountId) {
-    console.log('fetching accts..')
 return dispatch => {
     return fetch('http://localhost:1323/hathbanger/accounts/' + accountId + '/account-creds')
       .then(response =>
@@ -60,7 +61,7 @@ return dispatch => {
         if (!response.ok) {
           // If there was a problem, we want to
           // dispatch the error condition
-          // dispatch(loginError(accountCreds.message))
+          dispatch(fetchAccountCredsFailure(accountCreds))
           return Promise.reject(accountCreds)
         }
         else {
