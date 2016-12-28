@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { fetchAccounts } from '../actions/accountActions'
 import AccountCard from './AccountCard'
+import {Button} from 'react-bootstrap'
 
 export default class Dashboard extends Component {
   componentDidMount(){
@@ -20,9 +21,10 @@ export default class Dashboard extends Component {
                 isAuthenticated={isAuthenticated}
                 />)        
             })} 
-            <button 
-              className="btn btn-lg btn-block" 
-              onClick={event => this.handleClick(event)}>Add Account</button>
+            <Button 
+              bsSize="large" 
+              block
+              onClick={event => this.handleClick(event)}>Add Account</Button>
       </div>
     )
   }

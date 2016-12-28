@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { fetchPosts } from '../actions/postActions'
 import { fetchCredsAccount } from '../actions/accountActions'
 import { Link } from 'react-router'
+import {Panel, ButtonGroup} from 'react-bootstrap'
 
 export default class AccountCard extends Component {
   componentDidMount(){
@@ -14,15 +15,14 @@ export default class AccountCard extends Component {
     return (
       <div>
         <div className="col-sm-12">
-          <div className="card">
-            <div className="card-block">
+            <Panel>
                 <h2>{this.props.account.title}</h2>
+                <ButtonGroup>
                 <Link to={'/'+this.props.account.username+'/accounts/'+this.props.account.id + '/search' } className="btn btn-primary" >Search</Link>
                 <Link to={'/'+this.props.account.username+'/accounts/'+this.props.account.id + '/approved' } className="btn btn-primary" >Approved</Link>
                 <Link to={'/'+this.props.account.username+'/accounts/'+this.props.account.id + '/settings' } className="btn btn-primary" >Settings</Link>
-                
-            </div>
-          </div>      
+                </ButtonGroup>
+            </Panel>    
         </div>
         <div className="clearfix"></div>
       </div>
