@@ -1,27 +1,26 @@
 import React, { Component, PropTypes } from 'react'
 import { approvePost, disapprovePost, deletePost } from '../actions/postActions'
 import { tweetPost } from '../actions/twitterActions'
+import {Col, Thumbnail, Button} from 'react-bootstrap'
 
 export default class Post extends Component {
   render() {
     const { errorMessage, dispatch, user, account } = this.props
     return (
       <div>
-        <div className="col-sm-3">
-          <div className="card">
-            <img className="img-fluid card-img-top" src={this.props.post.imgurl} alt="Card image cap"/>
-            <div className="card-block">
+        <Col md={3}>
+          <Thumbnail src={this.props.post.imgurl} >
+
             {this.props.template != "Search" &&
-              <a onClick={(event) => this.handleTweetClick(event)} className="btn btn-primary btn-block">Tweet</a>
+              <Button onClick={(event) => this.handleTweetClick(event)} block bsStyle="primary">Tweet</Button>
             }
             {this.props.template != "Approve" &&
-              <a onClick={(event) => this.handleApproveClick(event)} className="btn btn-success btn-block">Approve</a>
+              <Button onClick={(event) => this.handleApproveClick(event)} block bsStyle="success">Approve</Button>
             }
-              <a onClick={(event) => this.handleDisapproveClick(event)} className="btn btn-warning btn-block">Disapprove</a>
-              <a onClick={(event) => this.handleDeleteClick(event)} className="btn btn-danger btn-block">Delete</a>
-            </div>
-          </div>      
-        </div>
+              <Button onClick={(event) => this.handleDisapproveClick(event)} block bsStyle="warning">Disapprove</Button>
+              <Button onClick={(event) => this.handleDeleteClick(event)} block bsStyle="danger">Delete</Button>
+          </Thumbnail>      
+        </Col>
       </div>
     )
   }
