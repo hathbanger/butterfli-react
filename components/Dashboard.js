@@ -11,6 +11,7 @@ export default class Dashboard extends Component {
     const { dispatch, isAuthenticated, user, errorMessage, posts } = this.props
     return (
       <div>
+        
           {this.props.accounts.map(function(account, index){
               return (
                 <AccountCard
