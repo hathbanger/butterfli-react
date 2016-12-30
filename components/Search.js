@@ -6,25 +6,19 @@ import PostsContainer from '../containers/PostsContainer'
 
 class ApprovedContainer extends Component {
   componentDidMount(){
-    console.log('approved container componentDidMount')
     let dispatch = this.props.dispatch
     let username = this.props.params.userId
     let accountId = this.props.params.account_id
-    console.log(username)
-    console.log(accountId)
-    console.log('approved container about to dispatch')
     dispatch(fetchPosts(username, accountId))
   }
   render() {
     const { dispatch,  isAuthenticated, errorMessage, user, accounts, posts } = this.props
     let username = this.props.params.userId
     let accountId = this.props.params.account_id
-    console.log('this.props in search', this.props)
     const filteredPosts = this.props.posts.filter(function(post){
       return !post.approved && !post.rated && post.account == accountId
     })
 
-    console.log('this.props in search', this.props)
     return (
       <div>
         <div className="container">

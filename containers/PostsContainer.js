@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import Post from '../components/Post'
-import { approvePost, disapprovePost, deletePost } from '../actions/postActions'
+import { editPostTitle, approvePost, disapprovePost, deletePost } from '../actions/postActions'
 import { tweetPost } from '../actions/twitterActions'
 
 class PostsContainer extends Component {
@@ -22,6 +22,7 @@ class PostsContainer extends Component {
                     user={ user }
                     account={ account }
                     isAuthenticated={ isAuthenticated }
+                    editPostTitle={creds => dispatch(editPostTitle(posts, creds))}
                     approvePost={creds => dispatch(approvePost(posts, creds))}
                     disapprovePost={creds => dispatch(disapprovePost(posts, creds))}
                     deletePost={creds => dispatch(deletePost(posts, creds))}

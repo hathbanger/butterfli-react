@@ -4,6 +4,10 @@ export const APPROVE_REQUEST = 'APPROVE_REQUEST'
 export const APPROVE_SUCCESS = 'APPROVE_SUCCESS'
 export const APPROVE_FAILURE = 'APPROVE_FAILURE'
 
+export const EDIT_POST_REQUEST = 'EDIT_POST_REQUEST'
+export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS'
+export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE'
+
 
 export const FETCH_SUCCESS = 'FETCH_SUCCESS'
 
@@ -50,6 +54,68 @@ return dispatch => {
   
 }
 
+// Uses the API middlware to get a quote
+export function editPostTitle(posts, creds) {
+  let config = {
+    method: 'POST'
+  }
+  console.log("creds >> ")
+  console.log(creds)
+  console.log("posts")
+  console.log(posts)
+  let text = creds.tweetText
+
+
+  console.log('text after sanitzation', text)
+
+  return dispatch => {
+    dispatch(editPostRequest(posts, creds))
+    return fetch('http://localhost:1323/post/edit/' + creds.postId + '/title/' + text, config)
+      .then(response =>
+        response.json()
+        .then(post => ({post, response})))
+        .then(({post, response}) => {
+          if (!response.ok) {
+            console.log("issues in edit!", response)
+            dispatch(editPostFailure(response))
+            return Promise.reject(response)
+          }
+          else {
+            let index = posts.findIndex(x => x.id == creds.postId)
+            console.log('index from postActions: ', index)
+            const newPostsArray = update(posts, {[index]: {title: {$set: creds.tweetText} }})    
+            dispatch(editPostSuccess(newPostsArray, creds))
+          }
+        })
+  }
+}
+
+
+function editPostRequest(posts, post) {
+  return {
+    type: EDIT_POST_REQUEST,
+    isFetching: true,
+    isAuthenticated: true,
+    posts: posts
+  }
+}
+
+function editPostSuccess(posts, post) {
+  return {
+    type: EDIT_POST_SUCCESS,
+    isFetching: false,
+    isAuthenticated: true,
+    posts: posts
+  }
+}
+
+function editPostFailure(creds) {
+  return {
+    type: EDIT_POST_FAILURE,
+    isFetching: false,
+    isAuthenticated: true
+  }
+}
 // Uses the API middlware to get a quote
 export function approvePost(posts, creds) {
   let config = {
