@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { fetchAccounts } from '../actions/accountActions'
 import AccountCard from './AccountCard'
 import BotNetContainer from '../containers/BotNetContainer'
+import { Button } from 'react-bootstrap'
 
 
 export default class Dashboard extends Component {
@@ -10,11 +11,11 @@ export default class Dashboard extends Component {
     dispatch(fetchAccounts(this.props.user))
   }
   render() {
-    const { dispatch, isAuthenticated, user, errorMessage, posts } = this.props
+    const { dispatch, isAuthenticated, user, accounts, errorMessage, posts } = this.props
     return (
       <div>
-        <BotNetContainer dispatch={dispatch} />
-          {this.props.accounts.map(function(account, index){
+        <BotNetContainer dispatch={dispatch} accounts={accounts} />
+          {accounts.map(function(account, index){
               return (
                 <AccountCard
                 key={ index }
@@ -23,10 +24,10 @@ export default class Dashboard extends Component {
                 isAuthenticated={isAuthenticated}
                 />)        
             })} 
-            <Button 
-              bsSize="large" 
-              block
-              onClick={event => this.handleClick(event)}>Add Account</Button>
+        <Button 
+          bsSize="large" 
+          block
+          onClick={event => this.handleClick(event)}>Add Account</Button>
       </div>
     )
   }

@@ -1,16 +1,46 @@
 import React, { Component, PropTypes } from 'react'
 import { approvePost, disapprovePost, deletePost } from '../actions/postActions'
 import { tweetPost } from '../actions/twitterActions'
-import {Col, Thumbnail, Button} from 'react-bootstrap'
+import ContentEditable from 'react-contenteditable'
+import {Col, Thumbnail, Well, Button} from 'react-bootstrap'
 
 export default class Post extends Component {
+  constructor(props){
+      super(props)
+      console.log(decodeURIComponent(this.props.post.title))
+      this.state = {html: decodeURIComponent(this.props.post.title)}
+      this.handleChange = this.handleChange.bind(this)
+  }  
+
+  handleChange(evt){
+    console.log("change: ", evt.target.value)
+    let strInputCode = evt.target.value
+
+    this.setState({html: strInputCode})
+    console.log("state!", strInputCode)
+  }
+
+  handleBlur(evt){
+
+  }
+
   render() {
     const { errorMessage, dispatch, user, account } = this.props
     return (
       <div>
         <Col md={3}>
           <Thumbnail src={this.props.post.imgurl} >
-
+            <Well bsSize="medium">
+              <small>
+              <ContentEditable
+                    html={this.state.html}
+                    disabled={false}       
+                    onChange={this.handleChange}
+                    onBlur={() => this.handlePostTitleEdit(this.state.html)}
+                  />            
+              </small>
+            </Well>
+            <p>
             {this.props.template != "Search" &&
               <Button onClick={(event) => this.handleTweetClick(event)} block bsStyle="primary">Tweet</Button>
             }
@@ -19,6 +49,7 @@ export default class Post extends Component {
             }
               <Button onClick={(event) => this.handleDisapproveClick(event)} block bsStyle="warning">Disapprove</Button>
               <Button onClick={(event) => this.handleDeleteClick(event)} block bsStyle="danger">Delete</Button>
+            </p>
           </Thumbnail>      
         </Col>
       </div>
@@ -27,12 +58,25 @@ export default class Post extends Component {
   
 
   handleTweetClick(event) {
-    let text = ""
+    // let text = ""
+    console.log('tweetEvent!', this.props)
     const creds = { username: this.props.post.username, 
                     accountId: this.props.post.account, 
                     postId: this.props.post.id, 
-                    tweetText: text } 
-    this.props.tweetPost(this.props.post)
+                    tweetText: this.props.post.title } 
+                    console.log('this is loaded in handle tweet click: ', this.props.post.title)
+    this.props.tweetPost(creds)
+  }
+
+  handlePostTitleEdit(event) {
+
+    let re = /%26nbsp%3B/gi;
+    event = event.replace(re, "%20")  
+    event = event.replace(/(<([^>]+)>)/ig, "")  
+      
+    const creds = { postId: this.props.post.id, 
+                    tweetText: encodeURIComponent(event) } 
+    this.props.editPostTitle(creds)
   }
 
   handleApproveClick(event) {

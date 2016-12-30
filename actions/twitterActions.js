@@ -18,9 +18,9 @@ export function tweetPost(creds) {
     return fetch('http://localhost:1323/' 
                     + creds.username 
                     + '/accounts/' 
-                    + creds.account 
+                    + creds.accountId 
                     + '/post/' 
-                    + creds.id 
+                    + creds.postId 
                     + '/upload/twitter/' 
                     + creds.tweetText, config)
       .then(response =>

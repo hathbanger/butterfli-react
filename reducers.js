@@ -4,7 +4,7 @@ import {
 } from './actions/loginAndAuthActions'
 
 import { 
-  FETCH_SUCCESS, APPROVE_REQUEST, APPROVE_SUCCESS, DISAPPROVE_REQUEST, DISAPPROVE_SUCCESS,
+  FETCH_SUCCESS, EDIT_POST_REQUEST, EDIT_POST_SUCCESS, APPROVE_REQUEST, APPROVE_SUCCESS, DISAPPROVE_REQUEST, DISAPPROVE_SUCCESS,
   DELETE_REQUEST, DELETE_SUCCESS 
 } from './actions/postActions'
 
@@ -73,10 +73,11 @@ function postFetch(state = {
 }, action) {
   switch (action.type) {
     case  FETCH_SUCCESS:
-      return Object.assign({}, state, {
-        isFetching: false,
-        posts: action.posts
-      })
+      return { ...state, posts: action.posts }
+    case EDIT_POST_REQUEST:
+      return { ...state, posts: action.posts }
+    case EDIT_POST_SUCCESS:
+      return { ...state, posts: action.posts }
     case APPROVE_REQUEST:
       return { ...state, posts: action.posts }
     case APPROVE_SUCCESS:

@@ -1,20 +1,25 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
+import {ButtonGroup, FormGroup, ControlLabel, FormControl, Panel} from 'react-bootstrap'
 
 class BotNetContainer extends Component {
   render() {
-    const { dispatch,  isAuthenticated, errorMessage } = this.props
+    const { dispatch, accounts,  isAuthenticated, errorMessage } = this.props
+    console.log("this.props from botnet", this.props)
     return (
     	<div>
-	        <div className="col-sm-12">
-	          <div className="card">
-	            <div className="card-block">
-	                <h2>BotNet</h2>
-	                
-	            </div>
-	          </div>      
-	        </div>
-	        <div className="clearfix"></div>
+            <Panel>
+                <h2>BotNet</h2>
+			    <FormGroup controlId="formControlsSelectMultiple">
+			      <ControlLabel>Select The Accounts For Your BotNet</ControlLabel>
+			      <FormControl componentClass="select" multiple>
+			      	{this.props.accounts.map(function(account, index){	
+						return <option>{account.title}</option>			      		
+			      	})
+			      	}
+			      </FormControl>
+			    </FormGroup>
+            </Panel>    
 	    </div>
     )
   }
