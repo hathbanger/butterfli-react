@@ -17,7 +17,7 @@ export function twitterCredsUpdate(creds) {
   console.log('creds from twitter creds update', creds)
   return dispatch => {
     dispatch(twitterCredsRequest(creds))
-    return fetch('http://localhost:1323/hathbanger/accounts/' + creds.accountId + '/twitter/creds', config)
+    return fetch('http://127.0.0.1:1323/hathbanger/accounts/' + creds.accountId + '/twitter/creds', config)
       .then(response =>
         response.json()
         .then(creds => ({creds, response})))
