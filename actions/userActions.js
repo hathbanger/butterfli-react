@@ -9,7 +9,7 @@ export const GET_USER_FAILURE = 'GET_USER_FAILURE'
 // // Uses the API middlware to get a quote
 export function getUser(creds) {
 return dispatch => {
-    return fetch('http://localhost:1323/user/' + creds)
+    return fetch('http://127.0.0.1:1323/user/' + creds)
       .then(response =>
         response.json()
         .then(user => ({ user, response }))
