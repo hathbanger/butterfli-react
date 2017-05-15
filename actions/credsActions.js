@@ -17,7 +17,7 @@ export function twitterCredsUpdate(creds) {
   console.log('creds from twitter creds update', creds)
   return dispatch => {
     dispatch(twitterCredsRequest(creds))
-    return fetch('http://api.butterfli.io/hathbanger/accounts/' + creds.accountId + '/twitter/creds', config)
+    return fetch('https://api.butterfli.io/hathbanger/accounts/' + creds.accountId + '/twitter/creds', config)
       .then(response =>
         response.json()
         .then(creds => ({creds, response})))

@@ -73,7 +73,7 @@ export function loginUser(creds) {
   return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
-    return fetch('http://api.butterfli.io/login', config)
+    return fetch('https://api.butterfli.io/login', config)
       .then(response =>
         response.json()
         .then(user => ({ user, response }))
@@ -119,7 +119,7 @@ export function signUp(creds) {
   return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
-    return fetch('http://api.butterfli.io/user', config)
+    return fetch('https://api.butterfli.io/user', config)
       .then(response =>
         response.json()
         .then(user => ({ user, response }))
