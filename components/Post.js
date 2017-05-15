@@ -7,17 +7,15 @@ import {Col, Thumbnail, Well, Button} from 'react-bootstrap'
 export default class Post extends Component {
   constructor(props){
       super(props)
-      console.log(decodeURIComponent(this.props.post.title))
-      this.state = {html: decodeURIComponent(this.props.post.title)}
+      console.log(this.props.post.title.replace('https://t.co', ''))
+      this.state = {html: this.props.post.title.replace('https://t.co', '')}
+      // this.state = {html: decodeURIComponent(this.props.post.title)}
       this.handleChange = this.handleChange.bind(this)
   }  
 
   handleChange(evt){
-    console.log("change: ", evt.target.value)
     let strInputCode = evt.target.value
-
     this.setState({html: strInputCode})
-    console.log("state!", strInputCode)
   }
 
   handleBlur(evt){
@@ -27,7 +25,7 @@ export default class Post extends Component {
   render() {
     const { errorMessage, dispatch, user, account } = this.props
     return (
-      <div>
+      <div>    
         <Col md={3}>
           <Thumbnail src={this.props.post.imgurl} >
             <Well bsSize="medium">
@@ -63,8 +61,9 @@ export default class Post extends Component {
     const creds = { username: this.props.post.username, 
                     accountId: this.props.post.account, 
                     postId: this.props.post.id, 
-                    tweetText: this.props.post.title } 
-                    console.log('this is loaded in handle tweet click: ', this.props.post.title)
+                    tweetText: this.props.post.title }
+
+
     this.props.tweetPost(creds)
   }
 

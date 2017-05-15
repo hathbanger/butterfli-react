@@ -11,7 +11,6 @@ class PostsContainer extends Component {
     let template = this.props.template
     return (
       <div>
-      
         <div className="card-group">
           {posts.map(function(post, index){
               return (

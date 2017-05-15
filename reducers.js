@@ -9,12 +9,12 @@ import {
 } from './actions/postActions'
 
 import { 
-  FETCH_ACCOUNTS_SUCCESS, 
+  FETCH_ACCOUNTS_SUCCESS, FETCH_ACCOUNT_CREDS_SUCCESS, 
 } from './actions/accountActions'
 
 import { 
-  FETCH_ACCOUNT_CREDS_SUCCESS, 
-} from './actions/accountActions'
+  TWEET_REQUEST, TWEET_SUCCESS, TWEET_FAILURE, 
+} from './actions/twitterActions'
 
 import { 
   GET_USER_SUCCESS, 

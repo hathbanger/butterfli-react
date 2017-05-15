@@ -18,10 +18,10 @@ export default class Dashboard extends Component {
           {accounts.map(function(account, index){
               return (
                 <AccountCard
-                key={ index }
-                account={account}
-                dispatch={dispatch} 
-                isAuthenticated={isAuthenticated}
+                  key={ index }
+                  account={account}
+                  dispatch={dispatch} 
+                  isAuthenticated={isAuthenticated}
                 />)        
             })} 
         <Button 
