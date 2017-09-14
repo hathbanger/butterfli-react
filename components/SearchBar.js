@@ -6,7 +6,6 @@ export default class SearchBar extends Component {
     const searchTerm = encodeURIComponent(this.refs.searchTerm.value.trim())
     const username = this.props.user
     const accountId = this.props.account
-    console.log('searchTerm: ', searchTerm)
     this.props.dispatch(search(username, accountId, searchTerm))
   }  
   render() {

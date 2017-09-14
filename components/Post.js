@@ -7,7 +7,6 @@ import {Col, Thumbnail, Well, Button} from 'react-bootstrap'
 export default class Post extends Component {
   constructor(props){
       super(props)
-      console.log(this.props.post.title.replace('https://t.co', ''))
       this.state = {html: this.props.post.title.replace('https://t.co', '')}
       // this.state = {html: decodeURIComponent(this.props.post.title)}
       this.handleChange = this.handleChange.bind(this)
@@ -25,17 +24,15 @@ export default class Post extends Component {
   render() {
     const { errorMessage, dispatch, user, account } = this.props
     return (
-      <div>    
-        <Col md={3}>
           <Thumbnail src={this.props.post.imgurl} >
             <Well bsSize="medium">
               <small>
               <ContentEditable
                     html={this.state.html}
-                    disabled={false}       
+                    disabled={false}
                     onChange={this.handleChange}
                     onBlur={() => this.handlePostTitleEdit(this.state.html)}
-                  />            
+                  />
               </small>
             </Well>
             <p>
@@ -49,11 +46,8 @@ export default class Post extends Component {
               <Button onClick={(event) => this.handleDeleteClick(event)} block bsStyle="danger">Delete</Button>
             </p>
           </Thumbnail>      
-        </Col>
-      </div>
     )
   }
-  
 
   handleTweetClick(event) {
     // let text = ""
@@ -74,7 +68,7 @@ export default class Post extends Component {
     event = event.replace(/(<([^>]+)>)/ig, "")  
       
     const creds = { postId: this.props.post.id, 
-                    tweetText: encodeURIComponent(event) } 
+                    tweetText: encodeURIComponent(event) }
     this.props.editPostTitle(creds)
   }
 

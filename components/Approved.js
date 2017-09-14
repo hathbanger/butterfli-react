@@ -8,7 +8,7 @@ class ApprovedContainer extends Component {
     this.props.dispatch(fetchPosts(this.props.params.userId, this.props.params.account_id))    
   }
   render() {
-    const { dispatch,  isAuthenticated, errorMessage, posts } = this.props
+    const { dispatch, isAuthenticated, errorMessage, posts } = this.props
     let username = this.props.params.userId
     let accountId = this.props.params.account_id    
     const filteredPosts = this.props.posts.filter(function(post){
@@ -29,11 +29,6 @@ class ApprovedContainer extends Component {
       </div>
     )
   }
-}
-
-ApprovedContainer.propTypes = {
-  posts: PropTypes.array,
-  dispatch: PropTypes.func
 }
 
 

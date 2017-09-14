@@ -7,11 +7,9 @@ class PostsContainer extends Component {
 
   render() {
     const { dispatch,  isAuthenticated, errorMessage, account, user, posts } = this.props
-    console.log('account from PC', this.props)
     let template = this.props.template
     return (
-      <div>
-        <div className="card-group">
+      <div className="posts-holder">
           {posts.map(function(post, index){
               return (
                 <Post
@@ -29,7 +27,6 @@ class PostsContainer extends Component {
                     template={template}
                 />)        
             })}        
-        </div>
       </div>
     )
   }

@@ -4,7 +4,7 @@ import Post from './Post'
 import SearchBar from './SearchBar'
 import PostsContainer from '../containers/PostsContainer'
 
-class ApprovedContainer extends Component {
+class SearchContainer extends Component {
   componentDidMount(){
     let dispatch = this.props.dispatch
     let username = this.props.params.userId
@@ -41,11 +41,6 @@ class ApprovedContainer extends Component {
   }
 }
 
-ApprovedContainer.propTypes = {
-  posts: PropTypes.array,
-  dispatch: PropTypes.func.isRequired
-}
 
-
-export default ApprovedContainer
+export default SearchContainer
 

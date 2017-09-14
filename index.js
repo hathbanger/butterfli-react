@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 
-import { IndexRoute, Router, Route, Link, browserHistory } from 'react-router'
+import { IndexRoute, Router, Route, Link, hashHistory } from 'react-router'
 
 import App from './containers/App'
 import Home from './components/Home'
@@ -26,7 +26,7 @@ let rootElement = document.getElementById('app')
 
 render(
   <Provider store={store}>
-	  <Router history={browserHistory}>
+	  <Router history={hashHistory}>
 	    <Route path="/" component={App}>
 		    <IndexRoute component={Home} />
 		    <Route path="/:userId/accounts/:account_id/search" component={Search} />

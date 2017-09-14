@@ -16,7 +16,7 @@ export function fetchAccounts() {
 return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     // dispatch(requestLogin(creds))
-    return fetch('https://api.butterfli.io/hathbanger/accounts')
+    return fetch('http://localhost:1323/hathbanger/accounts')
       .then(response =>
         response.json()
         .then(accounts => ({ accounts, response }))
@@ -28,10 +28,8 @@ return dispatch => {
           return Promise.reject(accounts)
         }
         else {
-          console.log("accounts: ", accounts)
-          
           // Dispatch the success action
-          dispatch(fetchAccountsSuccess(accounts))
+          dispatch(fetchAccountsSuccess(accounts.accounts))
         }
       }).catch(err => console.log("Error: ", err))
   }
@@ -53,7 +51,7 @@ function fetchAccountCredsFailure(accountCreds){
 // // Uses the API middlware to get a quote
 export function fetchCredsAccount(accountId) {
 return dispatch => {
-    return fetch('https://api.butterfli.io/hathbanger/accounts/' + accountId + '/account-creds')
+    return fetch('http://localhost:1323/hathbanger/accounts/' + accountId + '/account-creds')
       .then(response =>
         response.json()
         .then(accountCreds => ({ accountCreds, response }))

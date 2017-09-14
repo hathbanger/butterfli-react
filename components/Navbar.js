@@ -13,7 +13,7 @@ export default class Navbar extends Component {
       <nav className='navbar navbar-light bg-faded'>
         <div className='container-fluid'>
           <Link to="/" className="navbar-brand" >Butterfli</Link>
-           <div className='navbar-form form-inline pull-xs-right'>
+           <div className='navbar-form form-inline float-right'>
            {!isAuthenticated &&
              <Login
                errorMessage={errorMessage}

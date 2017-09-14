@@ -14,16 +14,15 @@ export default class Dashboard extends Component {
     const { dispatch, isAuthenticated, user, accounts, errorMessage, posts } = this.props
     return (
       <div>
-        <BotNetContainer dispatch={dispatch} accounts={accounts} />
-          {accounts.map(function(account, index){
-              return (
-                <AccountCard
-                  key={ index }
-                  account={account}
-                  dispatch={dispatch} 
-                  isAuthenticated={isAuthenticated}
-                />)        
-            })} 
+        {accounts.map(function(account, index){
+            return (
+              <AccountCard
+                key={ index }
+                account={account}
+                dispatch={dispatch} 
+                isAuthenticated={isAuthenticated}
+              />)        
+          })} 
         <Button 
           bsSize="large" 
           block

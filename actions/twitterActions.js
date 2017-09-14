@@ -14,7 +14,7 @@ export function favorite(username, accountId, text) {
   console.log('favortiing..')
   return dispatch => {
     // dispatch(deleteRequest(creds))
-    return fetch('http://localhost:1323/'+username+'/accounts/'+accountId+'/search/twitter/' + text, config)
+    return fetch('http://localhost:1323/'+username+'/accounts/'+accountId+'/favorite/twitter/' + text, config)
       .then(response =>
         response.json()
         .then(user => ({user, response})))
@@ -24,6 +24,7 @@ export function favorite(username, accountId, text) {
             return Promise.reject(response)
           }
           else {
+            console.log("FAVE SUCCES")
             dispatch(favoriteSuccess()) 
             // dispatch(fetchPosts(username, accountId))
           }

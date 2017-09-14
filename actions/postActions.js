@@ -245,7 +245,7 @@ export function deletePost(posts, post) {
           else {
             let index = posts.findIndex(x => x.id==post.id)
             const newPostsArray = update(posts, {$splice: [[index, 1]]})    
-            dispatch(deleteSuccess(newPostsArray, post)) 
+            dispatch(deleteSuccess(newPostsArray, post))
           }
         })
   }

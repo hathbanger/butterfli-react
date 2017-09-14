@@ -9,12 +9,14 @@ export const SEARCH_FAILURE = 'SEARCH_FAILURE'
 // Uses the API middlware to get a quote
 export function search(username, accountId, text) {
   let config = {
-    method: 'GET'
+    method: 'POST',
+    headers: { 'Content-Type':'application/x-www-form-urlencoded' },
+    body: `searchTerm=${text}`
+
   }
-  console.log('favortiing..')
   return dispatch => {
     // dispatch(deleteRequest(creds))
-    return fetch('http://localhost:1323/'+username+'/accounts/'+accountId+'/search/twitter/' + text, config)
+    return fetch('http://localhost:1323/'+username+'/accounts/'+accountId+'/search/twitter-img', config)
       .then(response =>
         response.json()
         .then(user => ({user, response})))

@@ -14,7 +14,7 @@ class BotNetContainer extends Component {
     			      <ControlLabel>Select The Accounts For Your BotNet</ControlLabel>
     			      <FormControl componentClass="select" multiple>
     			      	{this.props.accounts.map(function(account, index){	
-    						    return <option value={account.title}>{account.title}</option>			      		
+    						    return <option key={index} value={account.title}>{account.title}</option>			      		
     			      	})
     			      	}
     			      </FormControl>

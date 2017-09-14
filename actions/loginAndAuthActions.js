@@ -73,7 +73,7 @@ export function loginUser(creds) {
   return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
-    return fetch('https://api.butterfli.io/login', config)
+    return fetch('http://localhost:1323/login', config)
       .then(response =>
         response.json()
         .then(user => ({ user, response }))

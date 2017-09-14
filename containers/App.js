@@ -36,13 +36,6 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
-  posts: PropTypes.array,
-  accounts: PropTypes.array,
-  dispatch: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.string
-}
 
 function mapStateToProps(state) {
   

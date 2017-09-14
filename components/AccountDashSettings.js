@@ -35,6 +35,7 @@ export default class AccountDashSettings extends Component {
         <input type='text' ref='consumerSecret' className="form-control" placeholder={this.props.accountCreds.consumerSecret || "consumer secret"} style={{ marginRight: '5px' }} />
         <input type='text' ref='accessToken' className="form-control" placeholder={this.props.accountCreds.accessToken || "access token"} style={{ marginRight: '5px' }} />
         <input type='text' ref='accessTokenSecret' className="form-control" placeholder={this.props.accountCreds.accessTokenSecret || "access token secret"} style={{ marginRight: '5px' }} />
+        <hr/>
         <button onClick={(event) => this.handleClick(event)} className="btn btn-primary" type="button">Save!</button>
       </div>
     )

@@ -9,7 +9,7 @@ export default class SignUp extends Component {
         <div className='row'>
           <div className="container">
             <div className="col-md-6 col-md-offset-3">          
-                <h4 className="text-center">Sign up</h4>
+                <h4 className="text-center">Sign up! wow</h4>
                 <div className="form-group row">
                   <div className="col-sm-10">
                     <input type='text' ref='username' className="form-control" placeholder='Username'/>
