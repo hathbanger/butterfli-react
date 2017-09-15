@@ -27,16 +27,16 @@ export default class AccountCard extends Component {
                 <ButtonGroup>
                   <Link 
                     to={'/'+username+'/accounts/'+accountId+'/search' } 
-                    className="btn btn-primary" >Post Search</Link>
+                    className="btn btn-primary" ><div className="glyphicon glyphicon-search"></div> Search</Link>
                   <Link 
                     to={'/'+username+'/accounts/'+accountId+'/approved' } 
-                    className="btn btn-success" >Approved Posts</Link>
+                    className="btn btn-success" ><div className="glyphicon glyphicon-ok"></div> Approved</Link>
                   <Link 
                     to={'/'+username+'/accounts/'+accountId+'/settings' } 
-                    className="btn btn-default" >Account Settings</Link>
+                    className="btn btn-default" ><div className="glyphicon glyphicon-cog"></div> Settings</Link>
                   <button 
                     onClick={e => this.handleClick(username, accountId)} 
-                    className="btn btn-danger" >Delete Account</button>
+                    className="btn btn-danger" ><div className="glyphicon glyphicon-remove"></div> Delete</button>
                 </ButtonGroup>  
             </Panel>    
         </div>
