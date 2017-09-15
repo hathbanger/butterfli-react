@@ -26,7 +26,7 @@ import {
 function auth(state = {
     isFetching: false,
     user: {},
-    isAuthenticated: localStorage.getItem('id_token') ? true : false
+    isAuthenticated: sessionStorage.getItem('id_token') ? true : false
   }, action) {
   switch (action.type) {
     case LOGIN_REQUEST:

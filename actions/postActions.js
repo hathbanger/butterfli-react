@@ -226,7 +226,6 @@ function disapproveFailure(posts) {
 }
 
 
-// Uses the API middlware to get a quote
 export function deletePost(posts, post) {
   let config = {
     method: 'POST'

@@ -24,7 +24,6 @@ function requestLogin(creds) {
 }
 
 function receiveLogin(user) {
-  console.log('user', user)
   return {
     type: LOGIN_SUCCESS,
     isFetching: false,
@@ -79,17 +78,13 @@ export function loginUser(creds) {
         .then(user => ({ user, response }))
       ).then(({ user, response }) =>  {
         if (!response.ok) {
-          // If there was a problem, we want to
-          // dispatch the error condition
           dispatch(loginError(user.message))
           return Promise.reject(user)
         }
         else {
-          localStorage.setItem('id_token', user.token)
-          
-          // Dispatch the success action
+          console.log('user', user)
+          sessionStorage.setItem('id_token', user.token)
           dispatch(receiveLogin(user))
-          // dispatch(getUser(creds.username))
         }
       }).catch(err => console.log("Error: ", err))
   }
@@ -99,7 +94,7 @@ export function loginUser(creds) {
 export function logoutUser() {
   return dispatch => {
     dispatch(requestLogout())
-    localStorage.removeItem('id_token')
+    sessionStorage.removeItem('id_token')
     dispatch(receiveLogout())
   }
 }
@@ -107,11 +102,11 @@ export function logoutUser() {
 
 
 export function signUp(creds) {
-  let data = {username: creds.username, password: creds.password}
+  // sessionStorage.removeItem('id_token')
   let config = {
     method: 'POST',
-    headers: { 'Content-Type':'application/json' },
-    body: JSON.stringify(data)
+    headers: { 'Content-Type':'application/x-www-form-urlencoded' },
+    body: `username=${creds.username}&password=${creds.password}`
   }
   
   return dispatch => {
@@ -126,7 +121,8 @@ export function signUp(creds) {
           return Promise.reject(user)
         }
         else {
-          localStorage.setItem('id_token', user.auth_token)
+          console.log("here's the signup!", user)
+          sessionStorage.setItem('id_token', user.token)
           dispatch(receiveLogin(user))
         }
       }).catch(err => console.log("Error: ", err))

@@ -8,7 +8,6 @@ export default class Navbar extends Component {
   
   render() {
     const { dispatch, isAuthenticated, errorMessage } = this.props
-
     return (
       <nav className='navbar navbar-light bg-faded'>
         <div className='container-fluid'>

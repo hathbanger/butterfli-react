@@ -19,10 +19,5 @@ class SignUpContainer extends Component {
   }
 }
 
-SignUpContainer.propTypes = {
-  dispatch: PropTypes.func.isRequired
-}
-
-
 export default SignUpContainer
 

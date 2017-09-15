@@ -10,6 +10,7 @@ import Home from './components/Home'
 import Search from './components/Search'
 import Approved from './components/Approved'
 import AccountDashSettings from './components/AccountDashSettings'
+import AccountSettings from './components/AccountSettings'
 import userLogin from './reducers'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
@@ -32,6 +33,7 @@ render(
 		    <Route path="/:userId/accounts/:account_id/search" component={Search} />
 		    <Route path="/:userId/accounts/:account_id/approved" component={Approved} />
 		    <Route path="/:userId/accounts/:account_id/settings" component={AccountDashSettings} />
+		    <Route path="/:userId/accounts/new" component={AccountSettings} />
 	    </Route>
 	  </Router>
   </Provider>,

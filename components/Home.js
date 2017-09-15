@@ -3,8 +3,6 @@ import SignUpContainer from '../containers/SignUpContainer'
 
 import Dashboard from './Dashboard'
 
-// import { fetchPosts } from '../actions'
-
 export default class Home extends Component {
 
   render() {
@@ -25,12 +23,4 @@ export default class Home extends Component {
     )
   }
 
-}
-
-Home.propTypes = {
-  accounts: PropTypes.array,
-  posts: PropTypes.array,
-  dispatch: PropTypes.func,
-  isAuthenticated: PropTypes.bool,
-  errorMessage: PropTypes.string
 }
