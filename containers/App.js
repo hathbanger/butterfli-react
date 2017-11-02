@@ -14,6 +14,7 @@ class App extends Component {
     return (
       <div>
         <Navbar
+          user={user}
           isAuthenticated={isAuthenticated}
           errorMessage={errorMessage}
           dispatch={dispatch}

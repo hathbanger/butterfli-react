@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import { twitterCredsUpdate } from '../actions/credsActions'
-import { fetchCredsAccount } from '../actions/accountActions'
+import { fetchCredsAccount, deleteAccount } from '../actions/accountActions'
 import AccountCard from './AccountCard'
+import {unmarshallToken} from '../actions/utility'
 
+  const token = sessionStorage.getItem('id_token');
 export default class AccountDashSettings extends Component {
   componentWillMount(){
-    const token = sessionStorage.getItem('id_token');
     let dispatch = this.props.dispatch
     let user = this.unmarshallToken(token)
     const creds = { accountId: this.props.params.account_id, 
@@ -21,7 +22,8 @@ export default class AccountDashSettings extends Component {
     } 
   }
   
-  handleClick(event) {
+  handleCredsClick(event) {
+    console.log("this.props.params.account_id", this.props.params.account_id)
     const consumerKey = this.refs.consumerKey.value.trim()
     const consumerSecret = this.refs.consumerSecret.value.trim()
     const accessToken = this.refs.accessToken.value.trim()
@@ -32,10 +34,16 @@ export default class AccountDashSettings extends Component {
                     accessToken: accessToken, 
                     accessTokenSecret: accessTokenSecret}
     this.props.dispatch(twitterCredsUpdate(creds))
-  }    
+  }   
+
+  handleDeleteClick() {
+    let accountId = window.location.href.split("/")[6];
+    let username = this.unmarshallToken(token).name
+    this.props.dispatch(deleteAccount(username, accountId))
+  } 
 
   render() {
-    const { dispatch, isAuthenticated, errorMessage, user, accounts, posts } = this.props
+    const { dispatch, isAuthenticated, accountCreds, errorMessage, user, accounts, posts } = this.props
     let elementPos = this.props.accounts.map(function(x) {return x.id; }).indexOf(this.props.params.account_id);
   	let objectFound = this.props.accounts[elementPos];
 
@@ -46,31 +54,34 @@ export default class AccountDashSettings extends Component {
           type='text' 
           ref='consumerKey' 
           className="form-control" 
-          placeholder={this.props.accountCreds.consumerKey || "consumer key"} 
+          placeholder={accountCreds.consumerkey == "" ? "Enter a consumerkey" : accountCreds.consumerkey} 
           style={{ marginRight: '5px' }} />
         <input 
           type='text' 
           ref='consumerSecret' 
           className="form-control" 
-          placeholder={this.props.accountCreds.consumerSecret || "consumer secret"} 
+          placeholder={accountCreds.consumersecret == "" ? "Enter a consumersecret" : accountCreds.consumersecret} 
           style={{ marginRight: '5px' }} />
         <input 
           type='text' 
           ref='accessToken' 
           className="form-control" 
-          placeholder={this.props.accountCreds.accessToken || "access token"} 
+          placeholder={accountCreds.accesstoken == "" ? "Enter a accesstoken" : accountCreds.accesstoken} 
           style={{ marginRight: '5px' }} />
         <input 
           type='text' 
           ref='accessTokenSecret' 
           className="form-control" 
-          placeholder={this.props.accountCreds.accessTokenSecret || "access token secret"} 
+          placeholder={accountCreds.accesstokensecret == "" ? "Enter a accesstokensecret" : accountCreds.accesstokensecret} 
           style={{ marginRight: '5px' }} />
         <hr/>
         <button 
-          onClick={(event) => this.handleClick(event)} 
+          onClick={(event) => this.handleCredsClick(event)} 
           className="btn btn-primary" 
           type="button">Save!</button>
+        <button 
+          onClick={e => this.handleDeleteClick(user, objectFound)}
+          className="btn btn-danger" ><div className="glyphicon glyphicon-remove"></div> Delete</button>                    
       </div>
     )
   }

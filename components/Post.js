@@ -7,7 +7,7 @@ import {Col, Thumbnail, Well, Button} from 'react-bootstrap'
 export default class Post extends Component {
   constructor(props){
       super(props)
-      this.state = {html: this.props.post.title.replace('https://t.co', '')}
+      this.state = {html: decodeURIComponent(this.props.post.title.replace('https://t.co', ''))}
       // this.state = {html: decodeURIComponent(this.props.post.title)}
       this.handleChange = this.handleChange.bind(this)
   }  
@@ -17,34 +17,51 @@ export default class Post extends Component {
     this.setState({html: strInputCode})
   }
 
-  handleBlur(evt){
-
-  }
-
   render() {
     const { errorMessage, dispatch, user, account } = this.props
+    var tweeted = this.props.post.twitterid.length > 0;
     return (
           <Thumbnail src={this.props.post.imgurl} >
-            <Well bsSize="medium">
+            <Well>
               <small>
-              <ContentEditable
+                {!tweeted &&
+                  <ContentEditable
                     html={this.state.html}
                     disabled={false}
                     onChange={this.handleChange}
                     onBlur={() => this.handlePostTitleEdit(this.state.html)}
                   />
+                }
+                {tweeted &&
+                  <p className="text-center">
+                    {this.state.html}
+                  </p>
+                }
               </small>
             </Well>
-            <p>
-            {this.props.template != "Search" &&
-              <Button onClick={(event) => this.handleTweetClick(event)} block bsStyle="primary">Tweet</Button>
-            }
-            {this.props.template != "Approve" &&
-              <Button onClick={(event) => this.handleApproveClick(event)} block bsStyle="success">Approve</Button>
-            }
-              <Button onClick={(event) => this.handleDisapproveClick(event)} block bsStyle="warning">Disapprove</Button>
-              <Button onClick={(event) => this.handleDeleteClick(event)} block bsStyle="danger">Delete</Button>
-            </p>
+              <p>
+              {this.props.template != "Search" &&
+                <Button 
+                  disabled={tweeted} 
+                  onClick={(event) => this.handleTweetClick(event)} 
+                  block 
+                  bsStyle="primary">{tweeted ? "Already tweeted..":"Tweet"}</Button>
+              }
+              
+              {tweeted &&
+                <a href={"https://twitter.com/statuses/" + this.props.post.twitterid}>Go to tweet..</a>
+              }
+
+              {!tweeted &&
+                <div>
+                  {this.props.template != "Approve" &&
+                    <Button onClick={(event) => this.handleApproveClick(event)} block bsStyle="success">Approve</Button>
+                  }
+                  <Button onClick={(event) => this.handleDisapproveClick(event)} block bsStyle="warning">Disapprove</Button>
+                  <Button onClick={(event) => this.handleDeleteClick(event)} block bsStyle="danger">Delete</Button>
+                </div>
+              }
+              </p>
           </Thumbnail>      
     )
   }

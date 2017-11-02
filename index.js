@@ -7,6 +7,7 @@ import { IndexRoute, Router, Route, Link, hashHistory } from 'react-router'
 
 import App from './containers/App'
 import Home from './components/Home'
+import Robot from './components/Robot'
 import Search from './components/Search'
 import Approved from './components/Approved'
 import AccountDashSettings from './components/AccountDashSettings'
@@ -19,7 +20,8 @@ import api from './middleware/api'
 
 const logger = createLogger()
 
-let createStoreWithMiddleware = applyMiddleware(thunkMiddleware, api, logger)(createStore)
+// let createStoreWithMiddleware = applyMiddleware(thunkMiddleware, api, logger)(createStore)
+let createStoreWithMiddleware = applyMiddleware(thunkMiddleware, api)(createStore)
 
 let store = createStoreWithMiddleware(userLogin)
 
@@ -31,6 +33,7 @@ render(
 	    <Route path="/" component={App}>
 		    <IndexRoute component={Home} />
 		    <Route path="/:userId/accounts/:account_id/search" component={Search} />
+		    <Route path="/:userId/accounts/:account_id/robot" component={Robot} />
 		    <Route path="/:userId/accounts/:account_id/approved" component={Approved} />
 		    <Route path="/:userId/accounts/:account_id/settings" component={AccountDashSettings} />
 		    <Route path="/:userId/accounts/new" component={AccountSettings} />

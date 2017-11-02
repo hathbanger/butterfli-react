@@ -1,7 +1,9 @@
+import { hashHistory } from 'react-router'
 
 export const FETCH_ACCOUNTS_SUCCESS = 'FETCH_ACCOUNTS_SUCCESS'
 
 export const FETCH_ACCOUNT_CREDS_SUCCESS = 'FETCH_ACCOUNT_CREDS_SUCCESS'
+export const FETCH_ACCOUNT_CREDS_FAILURE = 'FETCH_ACCOUNT_CREDS_FAILURE'
 
 function fetchAccountsSuccess(accounts){
   return {
@@ -22,7 +24,7 @@ export function fetchAccounts(info) {
           return Promise.reject(accounts)
         }
         else {
-          dispatch(fetchAccountsSuccess(accounts.accounts))
+          dispatch(fetchAccountsSuccess(accounts))
         }
       }).catch(err => console.log("Error: ", err))
   }
@@ -45,7 +47,9 @@ export function createAccount(payload) {
           return Promise.reject(accounts)
         }
         else {
-          // dispatch(fetchAccountsSuccess(accounts.accounts))
+          console.log('accounts in create', accounts)
+            dispatch(fetchAccounts(payload.username))
+          // dispatch(fetchAccountsSuccess(accounts))
         }
       }).catch(err => console.log("Error: ", err))
   }
@@ -67,9 +71,7 @@ export function deleteAccount(username, accountId) {
             return Promise.reject(response)
           }
           else {
-            // let index = posts.findIndex(x => x.id==post.id)
-            // const newPostsArray = update(posts, {$splice: [[index, 1]]})    
-            // dispatch(deleteSuccess(newPostsArray, post))
+            hashHistory.goBack()
           }
         })
   }
@@ -81,9 +83,10 @@ function fetchAccountCredsSuccess(accountCreds){
     accountCreds: accountCreds
   }
 }
+
 function fetchAccountCredsFailure(accountCreds){
   return {
-    type: FETCH_ACCOUNT_CREDS_SUCCESS,
+    type: FETCH_ACCOUNT_CREDS_FAILURE,
     accountCreds: accountCreds
   }
 }
@@ -95,16 +98,14 @@ return dispatch => {
         response.json()
         .then(accountCreds => ({ accountCreds, response }))
       ).then(({ accountCreds, response }) =>  {
-        if (!response.ok) {
-          // If there was a problem, we want to
-          // dispatch the error condition
+        if (accountCreds == null) {
+          console.log('this didnt work')
           dispatch(fetchAccountCredsFailure(accountCreds))
           return Promise.reject(accountCreds)
         }
         else {
-          console.log("accountCreds: ", accountCreds)
-          
           // Dispatch the success action
+          console.log("accountCreds", accountCreds)
           dispatch(fetchAccountCredsSuccess(accountCreds))
         }
       }).catch(err => console.log("Error: ", err))

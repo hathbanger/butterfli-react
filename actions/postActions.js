@@ -59,14 +59,8 @@ export function editPostTitle(posts, creds) {
   let config = {
     method: 'POST'
   }
-  console.log("creds >> ")
-  console.log(creds)
-  console.log("posts")
-  console.log(posts)
+
   let text = creds.tweetText
-
-
-  console.log('text after sanitzation', text)
 
   return dispatch => {
     dispatch(editPostRequest(posts, creds))

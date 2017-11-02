@@ -14,19 +14,24 @@ export function twitterCredsUpdate(creds) {
     headers: { 'Content-Type':'application/x-www-form-urlencoded' },
     body: `consumerKey=${creds.consumerKey}&consumerSecret=${creds.consumerSecret}&accessToken=${creds.accessToken}&accessTokenSecret=${creds.accessTokenSecret}`
   }
-  console.log('creds from twitter creds update', creds)
+
   return dispatch => {
+    console.log("TWITTER CREDS UPDATE", config)
     dispatch(twitterCredsRequest(creds))
-    return fetch('http://localhost:1323/hathbanger/accounts/' + creds.accountId + '/account-creds', config)
+    return fetch('http://localhost:1323/hath/accounts/' 
+                  + creds.accountId 
+                  + '/account-creds', config)
       .then(response =>
         response.json()
         .then(creds => ({creds, response})))
         .then(({creds, response}) => {
           if (!response.ok) {
+            console.log('bad response', creds)
             dispatch(twitterCredsFailure(response))
             return Promise.reject(response)
           }
           else {
+            console.log('ok response', creds)
             dispatch(twitterCredsSuccess()) 
             // dispatch(fetchPosts())
           }

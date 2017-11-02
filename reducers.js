@@ -41,7 +41,7 @@ function auth(state = {
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: true,
-        username: action.username,
+        user: action.user,
         errorMessage: ''
       })
     case LOGIN_FAILURE:
@@ -99,7 +99,7 @@ function accountFetch(state = {
   isFetching: false,
   accounts: []
 }, action) {
-  
+  console.log("ACTION", action)
   switch (action.type) {
     case  FETCH_ACCOUNTS_SUCCESS:
       return Object.assign({}, state, {
@@ -113,7 +113,7 @@ function accountFetch(state = {
 
 function accountCredsFetch(state = {
   isFetching: false,
-  accountCreds: []
+  accountCreds: {}
 }, action) {
   
   switch (action.type) {

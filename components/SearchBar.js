@@ -7,7 +7,7 @@ export default class SearchBar extends Component {
     const username = this.props.user
     const accountId = this.props.account
     this.props.dispatch(search(username, accountId, searchTerm))
-  }  
+  }
   render() {
     const { dispatch, user, accounts } = this.props
     return (
@@ -21,8 +21,4 @@ export default class SearchBar extends Component {
               </div>
     )
   }
-}
-
-SearchBar.propTypes = {
-  dispatch: PropTypes.func.isRequired
 }

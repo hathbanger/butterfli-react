@@ -11,9 +11,6 @@ export default class AccountCard extends Component {
     // this.props.dispatch(fetchCredsAccount(this.props.account.id))
   }
 
-  handleClick(username, accountId){
-    this.props.dispatch(deleteAccount(username, accountId))
-  }
 
   render() {
     const { errorMessage, dispatch, user, account } = this.props
@@ -32,11 +29,11 @@ export default class AccountCard extends Component {
                     to={'/'+username+'/accounts/'+accountId+'/approved' } 
                     className="btn btn-success" ><div className="glyphicon glyphicon-ok"></div> Approved</Link>
                   <Link 
+                    to={'/'+username+'/accounts/'+accountId+'/robot' } 
+                    className="btn btn-info" ><div className="glyphicon glyphicon-tower"></div> Robot</Link>
+                  <Link 
                     to={'/'+username+'/accounts/'+accountId+'/settings' } 
                     className="btn btn-default" ><div className="glyphicon glyphicon-cog"></div> Settings</Link>
-                  <button 
-                    onClick={e => this.handleClick(username, accountId)} 
-                    className="btn btn-danger" ><div className="glyphicon glyphicon-remove"></div> Delete</button>
                 </ButtonGroup>  
             </Panel>    
         </div>

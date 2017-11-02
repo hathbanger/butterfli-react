@@ -1,3 +1,4 @@
+import {hashHistory} from 'react-router'
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -28,8 +29,7 @@ function receiveLogin(user) {
     type: LOGIN_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
-    id_token: user.token,
-    username: user
+    user: user
   }
 }
 
@@ -82,9 +82,9 @@ export function loginUser(creds) {
           return Promise.reject(user)
         }
         else {
-          console.log('user', user)
           sessionStorage.setItem('id_token', user.token)
-          dispatch(receiveLogin(user))
+          let userObj = unmarshallToken(user.token)
+          dispatch(receiveLogin(userObj))
         }
       }).catch(err => console.log("Error: ", err))
   }
@@ -96,6 +96,7 @@ export function logoutUser() {
     dispatch(requestLogout())
     sessionStorage.removeItem('id_token')
     dispatch(receiveLogout())
+    hashHistory.push('/');
   }
 }
 
@@ -121,10 +122,33 @@ export function signUp(creds) {
           return Promise.reject(user)
         }
         else {
-          console.log("here's the signup!", user)
           sessionStorage.setItem('id_token', user.token)
           dispatch(receiveLogin(user))
         }
       }).catch(err => console.log("Error: ", err))
+  }
+}
+
+export function validateToken(token){
+  return dispatch => {
+    var currentTime = Math.floor(new Date().getTime()/1000)
+    var unmarshalledToken = unmarshallToken(token);
+    if(unmarshalledToken && unmarshalledToken.exp > currentTime){
+      // dispatch(authenticateUser())
+      return true
+    } else {
+      return false
+    }
+  }
+}
+
+export function unmarshallToken(token){
+  if(token){
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace('-', '+').replace('_', '/');
+    var res = JSON.parse(window.atob(base64));
+    return res;
+  } else {
+    return false
   }
 }

@@ -22,6 +22,7 @@ export default class AccountSettings extends Component {
       return res;
     } 
   }
+
   render() {
     const { dispatch, isAuthenticated, errorMessage, user, accounts, posts } = this.props
     let elementPos = this.props.accounts.map(function(x) {return x.id; }).indexOf(this.props.params.account_id);
@@ -36,6 +37,7 @@ export default class AccountSettings extends Component {
         	placeholder="Account Title"
         	style={{ marginRight: '5px' }} />
         <hr/>
+
         <button 
         	onClick={(event) => this.handleClick(event)} 
         	className="btn btn-primary" 

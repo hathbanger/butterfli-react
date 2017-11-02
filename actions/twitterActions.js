@@ -9,12 +9,14 @@ export const TWEET_FAVORITE_STATUS = 'TWEET_FAILURE'
 // Uses the API middlware to get a quote
 export function favorite(username, accountId, text) {
   let config = {
-    method: 'POST'
+    method: 'POST',
+    headers: { 'Content-Type':'application/x-www-form-urlencoded' },
+    body: `searchTerm=${text}`
   }
   console.log('favortiing..')
   return dispatch => {
     // dispatch(deleteRequest(creds))
-    return fetch('http://localhost:1323/'+username+'/accounts/'+accountId+'/favorite/twitter/' + text, config)
+    return fetch('http://localhost:1323/'+username+'/accounts/'+accountId+'/favorite/twitter/', config)
       .then(response =>
         response.json()
         .then(user => ({user, response})))
